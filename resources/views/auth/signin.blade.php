@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>Signin</title>
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="row">
 <div class="col-md-4"></div>
 <div class="col-md-4" style="padding-top: 100px;">
-  <h3>Signup</h3>
+    <h3>Signin</h3>
 @if (session('success'))
 <div class="alert alert-success">
 {{ session('success')}}
@@ -25,11 +25,7 @@
 
 @endforeach
 @endif
-<form method="POST" action="{{ route('storeSignup')}}">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Name</label>
-    <input type="text" class="form-control" name="name">
-  </div>
+<form method="POST" action="{{ route('storeSignin')}}">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" class="form-control" name="email">

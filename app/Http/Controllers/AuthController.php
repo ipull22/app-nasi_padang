@@ -2,21 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function signup() {
+    public function signup(Request $request){
         return view('auth.signup');
     }
 
-    public function storeSignup(request $request) {
+    public function storeSignup(Request $request){
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required'
+            'password'=> 'required'
         ]);
 
-        dd($request);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil!');
+    }
+
+    public function signin(){
+        return view('auth.signin');
+    }
+
+    public function storeSignin(Request $request){
+        $request->validate([
+            'email' => 'required',
+            'password'=> 'required'
+        ]);
+
+        if(Auth::attempt(['email' => $request->email,'password'=> $request->password])){
+            return redirect()->to('/')->with('success','Berhasil Login!');
+        }
+
+        return redirect()->back()->withErrors([
+            'name' => 'Gagal Login!'
+        ])->withInput();
     }
 }
